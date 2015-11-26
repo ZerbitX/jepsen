@@ -43,9 +43,20 @@
           :>>               log-file
           (c/lit "2>&1")))
 
-(defn db []
+(defn install!
+  "Install consul!"
+  [version node]
+  (c/su
+    (let [archive (str "consul_" version "_linux_amd64.zip")]
+      (c/cd "/usr/bin"
+           (c/exec :wget (str "https://releases.hashicorp.com/consul/" version "/consul_" version "_linux_amd64.zip"))
+           (c/exec :unzip :-o archive) 
+           (c/exec :rm archive)))))
+
+(defn db [version]
   (reify db/DB
     (setup! [this test node]
+      (install! version node)
       (start-consul! test node)
 
       (Thread/sleep 1000)

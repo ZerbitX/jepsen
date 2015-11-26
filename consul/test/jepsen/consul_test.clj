@@ -21,7 +21,7 @@
                  noop-test
                  :name      "consul"
                  :os        debian/os
-                 :db        (db)
+                 :db        (db "0.5.2")
                  :client    (cas-client)
                  :model     (model/cas-register)
                  :checker   (checker/compose {:html   timeline/html
