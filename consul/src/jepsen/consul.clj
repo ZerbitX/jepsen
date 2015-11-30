@@ -26,7 +26,6 @@
           :--background
           :--make-pidfile
           :--pidfile        pidfile
-          :--chdir          "/opt/consul"
           :--exec           binary
           :--no-close
           :--
@@ -49,7 +48,7 @@
   (c/su
     (let [archive (str "consul_" version "_linux_amd64.zip")]
       (c/cd "/usr/bin"
-           (c/exec :wget (str "https://releases.hashicorp.com/consul/" version "/consul_" version "_linux_amd64.zip"))
+           (c/exec :wget (str "https://releases.hashicorp.com/consul/" version "/" archive) :-O archive)
            (c/exec :unzip :-o archive) 
            (c/exec :rm archive)))))
 
